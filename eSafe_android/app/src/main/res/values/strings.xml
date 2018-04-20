@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">E+Safe</string>
+    <string name="start_location">E+Safe正在获取您的位置</string>
+    <string name="location_exception">位置出现异常</string>
+    <declare-styleable name="BubbleView">
+        <attr name="arrowWidth" format="dimension"/>
+        <attr name="angle" format="dimension"/>
+        <attr name="arrowHeight" format="dimension"/>
+        <attr name="arrowPosition" format="dimension"/>
+        <attr name="bubbleColor" format="color"/>
+        <attr name="arrowLocation" format="enum">
+            <enum name="left" value="0x00"/>
+            <enum name="right" value="0x01"/>
+            <enum name="top" value="0x02"/>
+            <enum name="bottom" value="0x03"/>
+        </attr>
+    </declare-styleable>
+    <string name="s_ink">Ink</string>
+    <string name="s_rect">Rect</string>
+    <string name="s_remove">Remove</string>
+    <string name="s_save">Save</string>
+    <string name="s_end">End</string>
+    <string name="s_prev">&lt;</string>
+    <string name="s_next">></string>
+    <string name="s_find">the</string>
+    <string name="s_act">Do</string>
+    <string name="s_saveas">Save as</string>
+</resources>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:fresco="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:background="#E0F7FA"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <android.support.v7.widget.Toolbar
+            android:background="#00BCD4"
+            android:layout_width="match_parent"
+            android:id="@+id/toolbar"
+            android:layout_height="wrap_content"/>
+    <ImageView
+            android:layout_width="match_parent"
+            android:src="@drawable/background_logo"
+            android:scaleType="fitXY"
+            android:layout_height="230dp"/>
+    <com.facebook.drawee.view.SimpleDraweeView
+
+            android:layout_marginTop="32dp"
+            android:id="@+id/portraitView"
+            android:layout_gravity="center"
+            fresco:roundAsCircle="true"
+            fresco:placeholderImage="@drawable/default_portrait"
+            android:layout_width="56dp"
+            android:layout_height="56dp"/>
+    <TextView
+            android:layout_gravity="center"
+            android:id="@+id/username"
+            android:text="username"
+            android:layout_width="wrap_content"
+            android:textSize="20sp"
+            android:layout_height="wrap_content"/>
+    <Button
+            android:layout_gravity="center"
+            android:id="@+id/changePortrait"
+            android:text="切换头像"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+
+</LinearLayout>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.goldlone.esafe.mapper.GeoMapper">
+
+
+    <!-- 给用户插入数据 -->
+    <insert id="insertGPSInfo" parameterType="cn.goldlone.esafe.po.GPSInfo">
+        INSERT
+        INTO footprint(username, longitude, latitude, time, time_dur, week)
+        VALUES(#{username}, #{longitude}, #{latitude}, #{time}, #{time_dur}, #{week});
+    </insert>
+
+
+    <!-- 创建新表的同时需要在geo_msg中插入周末和非周末的数据 -->
+    <insert id="insertTail">
+        INSERT
+        INTO geo_msg(username, week, mornplace, noonplace, afterplace, nightplace)
+        VALUES(#{username}, #{week}, #{mornplace}, #{noonplace}, #{afterplace}, #{nightplace});
+    </insert>
+    <!-- 在geo_msg中创建周末和非周末的聚类数据 -->
+    <select id="selectUserTail" parameterType="string" resultType="int">
+        SELECT COUNT(*)
+        FROM geo_msg
+        WHERE username=#{name};
+    </select>
+
+    <!-- 更新轨迹信息 -->
+    <update id="updateTail" parameterType="cn.goldlone.esafe.po.GeoMsg">
+        UPDATE geo_msg
+        SET mornplace=#{mornplace},
+            noonplace=#{noonplace},
+            afterplace=#{afterplace},
+            nightplace=#{nightplace}
+        WHERE week=#{week} AND
+              username=#{username};
+    </update>
+
+    <!-- 查询某字段在某个时间段的行数 -->
+    <!--<select id="getCounts" parameterType="cn.goldlone.esafee.model.SelectCount" resultType="int">-->
+        <!--SELECT count(#{field})-->
+        <!--FROM footprint-->
+        <!--WHERE username=#{username} AND-->
+              <!--time_dur=#{timeDur} AND-->
+              <!--week=#{week} AND-->
+              <!--time BETWEEN #{startDate} and #{endDate};-->
+    <!--</select>-->
+    <!-- 查询某段时间里的坐标集合 -->
+    <select id="selectLatLng" parameterType="cn.goldlone.esafe.model.SelectCount" resultType="cn.goldlone.esafe.model.LatLng">
+        SELECT longitude,latitude
+        FROM footprint
+        WHERE username=#{username} AND
+              time_dur=#{timeDur} AND
+              week=#{week} AND
+              time between #{startDate} AND #{endDate};
+    </select>
+    <!-- 查询某个时间段中经纬度的最大、最小值 -->
+    <select id="selectMinMax" parameterType="cn.goldlone.esafe.model.SelectCount" resultType="cn.goldlone.esafe.model.MinMaxGps">
+        select min(longitude) minLongitude,
+               max(longitude) maxLongitude,
+               min(latitude) minLatitude,
+               max(latitude) maxLatitude
+        from footprint
+        where username=#{username} AND
+              time_dur=#{timeDur} and
+              week=#{week} and
+              time between #{startDate} AND #{endDate};
+    </select>
+
+
+    <!-- 查询聚类数据 -->
+    <select id="selectGeoMsg" resultType="cn.goldlone.esafe.po.GeoMsg">
+        select mornplace, noonplace, afterplace, nightplace
+        from geo_msg
+        WHERE username=#{username} AND
+              week=#{week};
+    </select>
+
+
+
+    <select id="selectLatLngByDate" parameterType="cn.goldlone.esafe.model.SelectCount" resultType="cn.goldlone.esafe.model.LatLng">
+        SELECT longitude,latitude
+        FROM footprint
+        WHERE  username=#{username} AND
+               time between #{startDate} AND #{endDate};
+    </select>
+
+    <select id="selectMinMaxByDate" parameterType="cn.goldlone.esafe.model.SelectCount" resultType="cn.goldlone.esafe.model.MinMaxGps">
+        select min(longitude) minLongitude,
+            max(longitude) maxLongitude,
+            min(latitude) minLatitude,
+            max(latitude) maxLatitude
+        from footprint
+        where username=#{username} AND
+              time between #{startDate} AND #{endDate};
+    </select>
+
+    <!-- 添加异常数据 -->
+    <insert id="insertTemselect" parameterType="cn.goldlone.esafe.po.Temselect">
+        INSERT
+        INTO temselect(username, longitude, latitude)
+        VALUES(#{username}, #{longitude}, #{latitude});
+    </insert>
+    <!-- 删除异常数据 -->
+    <delete id="deleteTemselect" parameterType="string">
+        DELETE
+        FROM temselect
+        WHERE username=#{username};
+    </delete>
+
+
+</mapper>
