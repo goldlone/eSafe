@@ -111,6 +111,11 @@ public class GeoService {
         return res.toString();
     }
 
+    /**
+     * 获取聚类数据
+     * @param username
+     * @return
+     */
     public Result getClusterCenter(String username) {
         GeoMsg gm1 = gm.selectGeoMsg(username, 1);
         GeoMsg gm2 = gm.selectGeoMsg(username, 0);

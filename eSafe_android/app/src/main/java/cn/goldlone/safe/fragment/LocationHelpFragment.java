@@ -24,7 +24,7 @@ import java.util.List;
  * Created by xunixhuang on 05/10/2016.
  */
 
-public class HelpFragment extends Fragment {
+public class LocationHelpFragment extends Fragment {
     MapView mMapView = null;
     BaiduMap mBaiduMap = null;
     private MsgReceiver msgReceiver;

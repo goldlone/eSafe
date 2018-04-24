@@ -281,7 +281,7 @@ public class FileSave {
     }
 
     public static String getContact() {
-        File contactFile=new File(getRootPath(),"contact.txt");
+        File contactFile=new File(getRootPath(), "contact.txt");
         if(!contactFile.exists()){
             return null;
         }
@@ -290,8 +290,7 @@ public class FileSave {
             BufferedReader br = new BufferedReader(reader);
             String contact = br.readLine();
             return contact;
-        }
-        catch (IOException e){
+        } catch (IOException e){
             return null;
         }
     }

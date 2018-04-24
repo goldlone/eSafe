@@ -20,5 +20,12 @@ public class Configs {
     /** 服务器地址 **/
     //    public static final String SERVER_IP = "http://192.168.1.101:8080/safe/";
     public static final String SERVER_IP = "http://115.24.13.189:8080/esafe/";
+//    public static boolean editContact = false;
+
+
+    // Notification ID
+    /** 添加紧急联系人 **/
+    public static final int NOTIFICATION_CONTACT_ID = 0x1001;
+
 
 }

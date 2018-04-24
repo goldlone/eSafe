@@ -385,7 +385,7 @@ public class MapService extends Service  {
             String msg = new String(sb);
             Log.i("mapService", msg);
             reader.close();
-////              断开连接
+//              断开连接
             connection.disconnect();
         } catch (IOException | JSONException e) {
             e.printStackTrace();
@@ -526,7 +526,7 @@ public class MapService extends Service  {
         }
     }
 
-    public void sendSMS(String phoneNumber,String message){
+    public void sendSMS(String phoneNumber, String message){
         //获取短信管理器
         android.telephony.SmsManager smsManager = android.telephony.SmsManager.getDefault();
         //拆分短信内容（手机短信长度限制）

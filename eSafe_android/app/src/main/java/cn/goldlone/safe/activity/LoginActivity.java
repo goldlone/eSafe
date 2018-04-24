@@ -16,6 +16,7 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import cn.goldlone.safe.service.MessageService;
+import cn.goldlone.safe.utils.CheckUtils;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     private MaterialEditText usernameEditText;
@@ -39,10 +40,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.buttonLogin:
                 String username = usernameEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
-                progressView.start();
-                AVUser.logInInBackground(username, password, new LogInCallback<AVUser>() {
-                    @Override
-                    public void done(AVUser user, AVException e) {
+                if(CheckUtils.isEffectiveStr(new String[] {username, password})) {
+                    progressView.start();
+                    AVUser.logInInBackground(username, password, new LogInCallback<AVUser>() {
+                        @Override
+                        public void done(AVUser user, AVException e) {
                         progressView.stop();
                         if (e == null) {
                             startService(new Intent(LoginActivity.this, MessageService.class));
@@ -66,11 +68,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             }
                             AVInstallation.getCurrentInstallation().saveInBackground(new SaveCallback() {
                                 public void done(AVException e) {
-                                if (e == null) {
-                                    String installationId = AVInstallation.getCurrentInstallation().getInstallationId();
-                                    AVUser.getCurrentUser().put("installationId",installationId);
-                                    AVUser.getCurrentUser().saveInBackground();
-                                }
+                                    if (e == null) {
+                                        String installationId = AVInstallation.getCurrentInstallation().getInstallationId();
+                                        AVUser.getCurrentUser().put("installationId",installationId);
+                                        AVUser.getCurrentUser().saveInBackground();
+                                    }
                                 }
                             });
                             finish();
@@ -95,8 +97,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 e1.printStackTrace();
                             }
                         }
-                    }
-                });
+                        }
+                    });
+                }
         }
     }
 

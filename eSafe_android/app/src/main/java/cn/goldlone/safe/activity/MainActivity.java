@@ -1,21 +1,16 @@
 package cn.goldlone.safe.activity;
 
-import android.Manifest;
-import android.annotation.TargetApi;
 import android.app.*;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import cn.goldlone.safe.R;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -40,6 +35,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import cn.goldlone.safe.Compulsory_service;
+import cn.goldlone.safe.service.BaseService;
 import cn.goldlone.safe.shop;
 
 import cn.goldlone.safe.adapter.FriendAdapter;
@@ -68,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 //        startService(new Intent(MainActivity.this, MapService.class));
+        startService(new Intent(this, BaseService.class));
         initDrawer();
         initFriend();
     }
