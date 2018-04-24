@@ -28,6 +28,7 @@ import cn.goldlone.safe.adapter.FriendAdapter;
 import cn.goldlone.safe.adapter.HomeWorkAdapter;
 import cn.goldlone.safe.message.AVIMPDFMessage;
 import cn.goldlone.safe.utils.FileSave;
+import cn.goldlone.safe.utils.ToastUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -146,7 +147,8 @@ public class HomeworkFragment extends Fragment {
                                             avimConversation.sendMessage(message, new AVIMConversationCallback() {
                                                 @Override
                                                 public void done(AVIMException e) {
-                                                    Toast.makeText(getActivity(), "发送成功", Toast.LENGTH_SHORT).show();
+                                                    ToastUtils.showShortToast(getContext(), "发送成功");
+//                                                    Toast.makeText(getActivity(), "发送成功", Toast.LENGTH_SHORT).show();
                                                 }
                                             });
                                         }

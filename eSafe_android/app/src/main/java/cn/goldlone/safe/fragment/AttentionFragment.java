@@ -108,7 +108,7 @@ public class AttentionFragment extends Fragment implements View.OnClickListener{
                 cal.set(year, month, day, hour, minute);
                 push.setPushDate(new Date(cal.getTimeInMillis()));
                 Log.i("AttentionActivity", "time" + hour + " " + minute);
-                push.setMessage(AVUser.getCurrentUser().getUsername() + "提醒你");
+                push.setMessage(editText.getText().toString());
                 push.sendInBackground(new SendCallback() {
                     @Override
                     public void done(AVException e) {
