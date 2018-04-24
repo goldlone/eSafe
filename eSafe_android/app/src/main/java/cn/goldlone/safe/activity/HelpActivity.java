@@ -19,7 +19,9 @@ import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -27,7 +29,9 @@ import cn.goldlone.safe.R;
 import cn.goldlone.safe.help.RecordActivity;
 import cn.goldlone.safe.service.PathService;
 import cn.goldlone.safe.service.PathServiceConnection;
+import cn.goldlone.safe.utils.CheckUtils;
 import cn.goldlone.safe.utils.FileSave;
+import cn.goldlone.safe.utils.ToastUtils;
 
 /**
  * @author : Created by CN on 2018/4/21 16:30
@@ -86,13 +90,27 @@ public class HelpActivity extends AppCompatActivity implements View.OnClickListe
                 BDLocation location = conn.getBinder().getBDLocation();
                 if(location != null) {
                     StringBuilder sb = new StringBuilder();
-                    sb.append("【求救】我所在的位置，");
-                    msg = "";
+                    sb.append("【求救】我所在的位置为，");
+                    if(location.hasAddr()) {
+                        sb.append(location.getAddrStr()+"，");
+                        if(CheckUtils.isEffectiveStr(location.getLocationDescribe())) {
+                            sb.append(location.getLocationDescribe());
+                        }
+                    } else {
+                        msg = "【求救】但定位失败，无法获取到定位信息";
+                    }
+                    msg = sb.toString();
                 } else {
                     msg = "定位失败，没有获取到定位信息";
                 }
                 // send message
-                // sendSMS(msg);
+                String contact = FileSave.getContact();
+                if(CheckUtils.isEffectiveStr(contact)) {
+                    sendSMS(contact, msg);
+                    ToastUtils.showShortToast(this, "发送成功");
+                } else
+                    ToastUtils.showShortToast(this, "请先设置紧急联系人");
+                Log.e("求救", msg);
                 break;
             case R.id.cv_help_video:
                 // 隐秘录像
@@ -164,7 +182,7 @@ public class HelpActivity extends AppCompatActivity implements View.OnClickListe
                 AlertDialog ad = (AlertDialog) dialog;
                 EditText editText=(EditText)ad.findViewById(R.id.editText_prompt);
                 String contact=editText.getText().toString();
-                if(!contact.equals("")){
+                if(!contact.equals("")) {
                     try {
                         FileSave.saveContact(contact);
                         Toast.makeText(HelpActivity.this,"存储成功",Toast.LENGTH_SHORT).show();
@@ -215,6 +233,22 @@ public class HelpActivity extends AppCompatActivity implements View.OnClickListe
     protected void onDestroy() {
         super.onDestroy();
         unbindService(conn);
+        if (isSOSOn) {
+            if (mTimer != null) {
+                mTimer.cancel();
+                mTimer = null;
+            }
+            if (mTimerTask != null) {
+                mTimerTask.cancel();
+                mTimerTask = null;
+            }
+            Camera.Parameters p = camera.getParameters();
+            p.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+            camera.setParameters(p);
+            camera.stopPreview();
+            isSOSOn = false;
+            cnum = 0;
+        }
     }
 
     @Override
@@ -270,5 +304,19 @@ public class HelpActivity extends AppCompatActivity implements View.OnClickListe
         };
     }
 
+    /**
+     * 发送短信
+     * @param phoneNumber
+     * @param message
+     */
+    public void sendSMS(String phoneNumber, String message){
+        //获取短信管理器
+        android.telephony.SmsManager smsManager = android.telephony.SmsManager.getDefault();
+        //拆分短信内容（手机短信长度限制）
+        List<String> divideContents = smsManager.divideMessage(message);
+        for (String text : divideContents) {
+            smsManager.sendTextMessage(phoneNumber, null, text, null, null);
+        }
+    }
 
 }
