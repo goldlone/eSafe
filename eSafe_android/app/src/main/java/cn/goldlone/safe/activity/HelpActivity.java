@@ -96,10 +96,10 @@ public class HelpActivity extends AppCompatActivity implements View.OnClickListe
                         if(CheckUtils.isEffectiveStr(location.getLocationDescribe())) {
                             sb.append(location.getLocationDescribe());
                         }
+                        msg = sb.toString();
                     } else {
                         msg = "【求救】但定位失败，无法获取到定位信息";
                     }
-                    msg = sb.toString();
                 } else {
                     msg = "定位失败，没有获取到定位信息";
                 }
