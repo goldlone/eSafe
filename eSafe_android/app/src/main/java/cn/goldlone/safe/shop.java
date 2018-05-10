@@ -1,5 +1,7 @@
 package cn.goldlone.safe;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
@@ -117,12 +119,12 @@ public class shop extends AppCompatActivity {
                 switch (position){
                     case 0:
                         Toast.makeText(shop.this,"hello",Toast.LENGTH_SHORT).show();
-//                        Intent intent = new Intent();
-//                        intent.setAction("android.intent.action.VIEW");
-//                        String url = "taobao://shop.m.taobao.com/shop/shop_index.htm?shop_id=131259851&spm=a230r.7195193.1997079397.8.Pp3ZMM&point";
-//                        Uri uri = Uri.parse(url);
-//                        intent.setData(uri);
-//                        startActivity(intent);
+                        Intent intent = new Intent();
+                        intent.setAction("android.intent.action.VIEW");
+                        String url = "taobao://shop.m.taobao.com/shop/shop_index.htm?shop_id=131259851&spm=a230r.7195193.1997079397.8.Pp3ZMM&point";
+                        Uri uri = Uri.parse(url);
+                        intent.setData(uri);
+                        startActivity(intent);
                     case 1:
                         Toast.makeText(shop.this,"hello",Toast.LENGTH_SHORT).show();
 //                        Intent intent2 = new Intent();

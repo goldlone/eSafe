@@ -135,8 +135,16 @@ public class PathActivity extends AppCompatActivity {
                                         if(username==null || "".equals(username))
                                             return;
                                         List<Cluster> list = HttpUtils.getCluster(username);
-                                        if(list.size()==0)
+                                        Log.e("TAG", ""+list.size());
+                                        if(list.size()==0) {
+                                            runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    ToastUtils.showShortToast(PathActivity.this, "没有找到轨迹数据");
+                                                }
+                                            });
                                             return;
+                                        }
                                         //创建OverlayOptions的集合
                                         List<OverlayOptions> options = new ArrayList<OverlayOptions>();
 //                                        // 图像

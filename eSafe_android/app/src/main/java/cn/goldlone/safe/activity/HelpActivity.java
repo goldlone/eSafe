@@ -39,6 +39,7 @@ import cn.goldlone.safe.utils.ToastUtils;
 public class HelpActivity extends AppCompatActivity implements View.OnClickListener {
 
     private long firstClickTime = 0;
+    private long volumeDownFirst = 0;
     private PathServiceConnection conn = new PathServiceConnection();
 
     // 闪光灯
@@ -86,31 +87,7 @@ public class HelpActivity extends AppCompatActivity implements View.OnClickListe
         switch(v.getId()) {
             case R.id.cv_help_location:
                 // 发送定位求救信息
-                String msg = "";
-                BDLocation location = conn.getBinder().getBDLocation();
-                if(location != null) {
-                    StringBuilder sb = new StringBuilder();
-                    sb.append("【求救】我所在的位置为，");
-                    if(location.hasAddr()) {
-                        sb.append(location.getAddrStr()+"，");
-                        if(CheckUtils.isEffectiveStr(location.getLocationDescribe())) {
-                            sb.append(location.getLocationDescribe());
-                        }
-                        msg = sb.toString();
-                    } else {
-                        msg = "【求救】但定位失败，无法获取到定位信息";
-                    }
-                } else {
-                    msg = "定位失败，没有获取到定位信息";
-                }
-                // send message
-                String contact = FileSave.getContact();
-                if(CheckUtils.isEffectiveStr(contact)) {
-                    sendSMS(contact, msg);
-                    ToastUtils.showShortToast(this, "发送成功");
-                } else
-                    ToastUtils.showShortToast(this, "请先设置紧急联系人");
-                Log.e("求救", msg);
+                sendLocationMessage();
                 break;
             case R.id.cv_help_video:
                 // 隐秘录像
@@ -119,35 +96,75 @@ public class HelpActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.cv_help_light:
                 // 打开或关闭闪光灯
-                if (isSOSOn) {
-                    if (mTimer != null) {
-                        mTimer.cancel();
-                        mTimer = null;
-                    }
-                    if (mTimerTask != null) {
-                        mTimerTask.cancel();
-                        mTimerTask = null;
-                    }
-                    Camera.Parameters p = camera.getParameters();
-                    p.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
-                    camera.setParameters(p);
-                    camera.stopPreview();
-                    isSOSOn = false;
-                    cnum = 0;
-                } else {
-                    if (mTimer == null) {
-                        mTimer = new Timer();
-                    }
-                    if (mTimerTask == null) {
-                        setTimerTask();
-                    }
-                    if (mTimer != null && mTimerTask != null) {
-                        mTimer.schedule(mTimerTask, 0, 50);
-                        isSOSOn = true;
-                        cnum = 0;
-                    }
-                }
+                openOrCloseLight();
                 break;
+        }
+    }
+
+    /**
+     * 发送定位信息
+     */
+    private void sendLocationMessage() {
+        String msg = "";
+        BDLocation location = conn.getBinder().getBDLocation();
+        if(location != null) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("【求救】我所在的位置为，");
+            sb.append("纬度："+location.getLatitude());
+            sb.append("，经度："+location.getLongitude());
+            if(location.hasAddr()) {
+                sb.append(","+location.getAddrStr()+"，");
+                if(CheckUtils.isEffectiveStr(location.getLocationDescribe())) {
+                    sb.append(location.getLocationDescribe());
+                }
+                msg = sb.toString();
+            } else {
+                msg = "【求救】但定位失败，无法获取到定位信息";
+            }
+        } else {
+            msg = "定位失败，没有获取到定位信息";
+        }
+        // send message
+        String contact = FileSave.getContact();
+        if(CheckUtils.isEffectiveStr(contact)) {
+            sendSMS(contact, msg);
+            ToastUtils.showShortToast(this, "发送成功");
+        } else
+            ToastUtils.showShortToast(this, "请先设置紧急联系人");
+        Log.e("求救信息", msg);
+    }
+
+    /**
+     * 打开、关闭闪光灯
+     */
+    private void openOrCloseLight() {
+        if (isSOSOn) {
+            if (mTimer != null) {
+                mTimer.cancel();
+                mTimer = null;
+            }
+            if (mTimerTask != null) {
+                mTimerTask.cancel();
+                mTimerTask = null;
+            }
+            Camera.Parameters p = camera.getParameters();
+            p.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+            camera.setParameters(p);
+            camera.stopPreview();
+            isSOSOn = false;
+            cnum = 0;
+        } else {
+            if (mTimer == null) {
+                mTimer = new Timer();
+            }
+            if (mTimerTask == null) {
+                setTimerTask();
+            }
+            if (mTimer != null && mTimerTask != null) {
+                mTimer.schedule(mTimerTask, 0, 50);
+                isSOSOn = true;
+                cnum = 0;
+            }
         }
     }
 
@@ -205,11 +222,11 @@ public class HelpActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {
-            case KeyEvent.KEYCODE_VOLUME_DOWN: // 定位求救
-//                helpFragment.sendHelpMessage();
-                return true;
             case KeyEvent.KEYCODE_VOLUME_UP: // 隐秘录像
                 clickEvent();
+            case KeyEvent.KEYCODE_VOLUME_DOWN: // 定位求救
+                locationHelp();
+                return true;
             default:
                 break;
         }
@@ -221,11 +238,22 @@ public class HelpActivity extends AppCompatActivity implements View.OnClickListe
         long secondClickTime = System.currentTimeMillis();
         long dtime = secondClickTime - firstClickTime;
         if(dtime < 500){
+            sendLocationMessage();
             // 实现双击
             Intent intent=new Intent(this, RecordActivity.class);
             startActivity(intent);
         } else{
             firstClickTime = System.currentTimeMillis();
+        }
+    }
+
+    public void locationHelp() {
+        long volumeDownSecond = System.currentTimeMillis();
+        long dtime = volumeDownSecond - volumeDownFirst;
+        if(dtime < 500){
+            sendLocationMessage();
+        } else{
+            volumeDownFirst = System.currentTimeMillis();
         }
     }
 
@@ -318,5 +346,4 @@ public class HelpActivity extends AppCompatActivity implements View.OnClickListe
             smsManager.sendTextMessage(phoneNumber, null, text, null, null);
         }
     }
-
 }

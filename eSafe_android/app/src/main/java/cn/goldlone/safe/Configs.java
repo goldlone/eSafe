@@ -18,8 +18,8 @@ public class Configs {
     /** 是否监控足迹 **/
     public static boolean isMonitor = false;
     /** 服务器地址 **/
-    //    public static final String SERVER_IP = "http://192.168.1.101:8080/safe/";
-    public static final String SERVER_IP = "http://115.24.13.189:8080/esafe/";
+        public static final String SERVER_IP = "http://192.168.1.103:8080/esafe/";
+//    public static final String SERVER_IP = "http://115.24.13.189:8080/esafe/";
 //    public static boolean editContact = false;
 
 

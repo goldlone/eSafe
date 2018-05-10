@@ -51,7 +51,7 @@ public class YcejApplicationTests {
 	@Autowired
 	private ChealPoint cp;
 
-	@Test
+//	@Test
 	public void train() {
 		// 训练
 		cp.train("gold1");
@@ -73,7 +73,7 @@ public class YcejApplicationTests {
 	@Autowired
 	private GeoService gs;
 
-	@Test
+//	@Test
 	public void getCluster() {
 		gs.getClusterCenter("gold1");
 	}

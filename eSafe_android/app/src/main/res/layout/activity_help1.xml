@@ -17,131 +17,146 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#f0f0f0"
         android:gravity="center"
         android:orientation="vertical">
 
-        <LinearLayout
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cv_help_location"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:gravity="center_horizontal">
+            android:layout_height="128dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:orientation="horizontal"
+            app:cardBackgroundColor="#FAFAFA"
+            app:cardCornerRadius="4dp"
+            app:cardElevation="4dp"
+            app:cardUseCompatPadding="true">
 
-            <android.support.v7.widget.CardView
-                android:id="@+id/cv_help_location"
-                android:layout_width="172dp"
-                android:layout_height="128dp"
-                android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:orientation="horizontal"
-                app:cardBackgroundColor="#FAFAFA"
-                app:cardCornerRadius="4dp"
-                app:cardElevation="4dp"
-                app:cardUseCompatPadding="true">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical">
 
-                <LinearLayout
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_gravity="center_horizontal"
+                    fresco:placeholderImage="@mipmap/location_act"
+                    fresco:roundAsCircle="true" />
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:orientation="vertical">
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="定位求救"
+                    android:textColor="#000"
+                    android:textSize="18sp" />
 
-                    <com.facebook.drawee.view.SimpleDraweeView
-                        android:layout_width="56dp"
-                        android:layout_height="56dp"
-                        android:layout_gravity="center_horizontal"
-                        fresco:placeholderImage="@mipmap/location_act"
-                        fresco:roundAsCircle="true" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="5dp"
-                        android:text="定位求救"
-                        android:textColor="#000"
-                        android:textSize="18sp" />
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
-                android:id="@+id/cv_help_light"
-                android:layout_width="172dp"
-                android:layout_height="128dp"
-                android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:orientation="horizontal"
-                app:cardBackgroundColor="#FAFAFA"
-                app:cardCornerRadius="4dp"
-                app:cardElevation="4dp"
-                app:cardUseCompatPadding="true">
-
-                <LinearLayout
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:orientation="vertical">
+                    android:layout_marginTop="5dp"
+                    android:text="连续按两次下音量键"
+                    />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
 
-                    <com.facebook.drawee.view.SimpleDraweeView
-                        android:layout_width="56dp"
-                        android:layout_height="56dp"
-                        android:layout_gravity="center_horizontal"
-                        fresco:placeholderImage="@mipmap/light_act"
-                        fresco:roundAsCircle="true" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="5dp"
-                        android:text="闪光灯"
-                        android:textColor="#000"
-                        android:textSize="18sp" />
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
-        </LinearLayout>
-
-        <LinearLayout
+        <android.support.v7.widget.CardView
+            android:id="@+id/cv_help_video"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginTop="30dp"
-            android:gravity="center_horizontal">
+            android:layout_height="128dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:orientation="horizontal"
+            app:cardBackgroundColor="#FAFAFA"
+            app:cardCornerRadius="4dp"
+            app:cardElevation="4dp"
+            app:cardUseCompatPadding="true">
 
-            <android.support.v7.widget.CardView
-                android:id="@+id/cv_help_video"
-                android:layout_width="172dp"
-                android:layout_height="128dp"
-                android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:orientation="horizontal"
-                app:cardBackgroundColor="#FAFAFA"
-                app:cardCornerRadius="4dp"
-                app:cardElevation="4dp"
-                app:cardUseCompatPadding="true">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical">
 
-                <LinearLayout
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_gravity="center_horizontal"
+                    fresco:placeholderImage="@mipmap/video_act"
+                    fresco:roundAsCircle="true" />
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:orientation="vertical">
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="隐秘录像"
+                    android:textColor="#000"
+                    android:textSize="18sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="连续按两次上音量键"
+                    />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
 
-                    <com.facebook.drawee.view.SimpleDraweeView
-                        android:layout_width="56dp"
-                        android:layout_height="56dp"
-                        android:layout_gravity="center_horizontal"
-                        fresco:placeholderImage="@mipmap/video_act"
-                        fresco:roundAsCircle="true" />
+        <android.support.v7.widget.CardView
+            android:id="@+id/cv_help_light"
+            android:layout_width="match_parent"
+            android:layout_height="128dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:orientation="horizontal"
+            app:cardBackgroundColor="#FAFAFA"
+            app:cardCornerRadius="4dp"
+            app:cardElevation="4dp"
+            app:cardUseCompatPadding="true">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="5dp"
-                        android:text="隐秘录像"
-                        android:textColor="#000"
-                        android:textSize="18sp" />
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
-        </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_gravity="center_horizontal"
+                    fresco:placeholderImage="@mipmap/light_act"
+                    fresco:roundAsCircle="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="闪光灯"
+                    android:textColor="#000"
+                    android:textSize="18sp" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center_vertical"-->
+        <!--android:gravity="center_horizontal">-->
+        <!--</LinearLayout>-->
+        <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center_vertical"-->
+        <!--android:layout_marginTop="30dp"-->
+        <!--android:gravity="center_horizontal">-->
+
+        <!--</LinearLayout>-->
     </LinearLayout>
 
 </LinearLayout>

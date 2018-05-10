@@ -118,8 +118,7 @@ public class HttpUtils {
     public static List<Cluster> getCluster(String username) {
         List<Cluster> list = new ArrayList<>();
         try {
-//            URL url = new URL(Configs.SERVER_IP+"/cluster/data");
-            URL url = new URL("http://115.24.13.189:8080/esafe/cluster/data");
+            URL url = new URL(Configs.SERVER_IP+"/cluster/data");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type","application/x-www-form-urlencoded");
